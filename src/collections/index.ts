@@ -6,8 +6,16 @@ export const Users: CollectionConfig = {
     useAsTitle: 'email',
   },
   auth: true,
+  access: {
+    read: ({req: {user}}) => {
+      if (!user) {
+        return false
+      }
+      return {
+        'breadcrumbs.doc.id': { in: user.id }
+      }
+    },
+  },
   fields: [
-    // Email added by default
-    // Add more fields as needed
   ],
 }
